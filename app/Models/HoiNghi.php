@@ -12,6 +12,8 @@ class HoiNghi extends Model
     //Khai báo tên Table trong Database
     protected $table = 'hoi_nghi';
 
+
+    protected $primaryKey = 'hoi_nghi_id';
     //Tùy chỉnh lại tên cột ngày tạo và ngày sửa cuối
     const CREATED_AT = 'ngay_tao';
     const UPDATED_AT = 'ngay_sua_cuoi';

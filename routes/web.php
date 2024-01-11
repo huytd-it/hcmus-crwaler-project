@@ -22,3 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/crawler', [HoiNghiController::class, 'index']);
 Route::get('/crawler2', [HoiNghiController::class, 'crawler2']);
+
+Route::get('/', function() {
+    return view('index');
+});
