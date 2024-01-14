@@ -6,6 +6,7 @@ use App\Models\HoiNghi;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Request;
 use Symfony\Component\DomCrawler\Crawler;
 use Illuminate\Support\Str;
 // Ví dụ: Một controller quản lý xử lý dữ liệu Hội nghị
@@ -45,7 +46,7 @@ class HoiNghiController extends Controller
                 if (!isset($checkName->hoi_nghi_id)) {
                     HoiNghi::create($hoiNghi);
                 } else {
-                   
+
                     $hoiNghiUpdate = HoiNghi::findOrFail($checkName->hoi_nghi_id);
                     $hoiNghiUpdate->update([
                         'ten_hoi_nghi' => $name,
@@ -96,5 +97,25 @@ class HoiNghiController extends Controller
 
         // var_dump($nodeValues);
         return response($nodeValues);
+    }
+
+    function getAll(Request $request)
+    {
+        $data = DB::table('hoi_nghi');
+
+        if($request->has('search')) {
+            $data->where('ten_hoi_nghi', 'LIKE', "%{$request->input('search')}%");
+        }
+
+        if ($request->has('length')) {
+            $data->limit($request->input('length'));
+        }
+        if ($request->has('start')) {
+            $data->offset($request->input('start'));
+        }
+        return response([
+            'msg' => 'Return hoi nghi',
+            'data' => $data->get()
+        ]);
     }
 }

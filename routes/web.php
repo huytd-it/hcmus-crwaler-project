@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ChuDeController;
+use App\Http\Controllers\DiaDiemController;
 use App\Http\Controllers\HoiNghiController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +25,29 @@ use Illuminate\Support\Facades\Route;
 Route::get('/crawler', [HoiNghiController::class, 'index']);
 Route::get('/crawler2', [HoiNghiController::class, 'crawler2']);
 
-Route::get('/', function() {
+
+Route::prefix('v1/api/')->group(function () {
+    Route::name('v1.api.')->group(function () {
+
+        Route::prefix('hoi-nghi/')->group(function () {
+            Route::name('hoi-nghi.')->group(function () {
+                Route::get('all', [HoiNghiController::class, 'getAll'])->name('all');
+            });
+        });
+        Route::prefix('dia-diem/')->group(function () {
+            Route::name('dia-diem.')->group(function () {
+                Route::get('all', [DiaDiemController::class, 'index'])->name('all');
+            });
+        });
+
+        Route::prefix('dia-diem/')->group(function () {
+            Route::name('dia-diem.')->group(function () {
+                Route::get('all', [ChuDeController::class, 'index'])->name('all');
+            });
+        });
+    });
+});
+
+Route::get('/', function () {
     return view('index');
 });
