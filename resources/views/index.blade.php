@@ -180,7 +180,7 @@
                     <div class="col-xl-3">
                         <div class="form-group">
 
-                            <select name="origin_host" id="" class="form-control">
+                            <select name="nguon_thong_tin" id="" class="form-control">
                                 <option value=""> -- Nguồn thông tin --</option>
                             </select>
                         </div>
@@ -188,7 +188,7 @@
                     <div class="col-xl-3">
                         <div class="form-group">
 
-                            <select name="" id="" class="form-control">
+                            <select name="dia_diem" id="" class="form-control">
                                 <option value=""> -- Địa điểm --</option>
 
                             </select>
@@ -197,7 +197,7 @@
                     <div class="col-xl-3">
                         <div class="form-group">
 
-                            <select name="" id="" class="form-control">
+                            <select name="dien_gia" id="" class="form-control">
                                 <option value=""> -- Diễn giả --</option>
 
                             </select>
@@ -206,7 +206,7 @@
                     <div class="col-xl-3">
                         <div class="form-group">
 
-                            <select name="" id="" class="form-control">
+                            <select name="linh_vuc" id="" class="form-control">
                                 <option value=""> -- Lĩnh vực quan tâm --</option>
 
                             </select>
@@ -269,12 +269,47 @@
         }
 
         $('#filter [name=search]').on('input', function() {
+            showLoading();
             getHoiNghi(generateList);
         });
 
         var start = 0;
 
         getHoiNghi(generateList);
+
+        getChuDe(function(res) {
+            var options = '<option>-- Chọn lĩnh vực -- </option>';
+            $(res).each(function(i,el) {
+                options+= '<option value="' + el.chu_de_id+'">' + el.ten_chu_de + "</option>";
+            });
+
+            $('[name=linh_vuc]').html(options);
+        });
+
+        getDiaDiem(function(res) {
+            var options = '<option>-- Chọn địa điểm -- </option>';
+            $(res).each(function(i,el) {
+                options+= '<option value="' + el.dia_diem_id+'">' + el.ten_dia_diem + "</option>";
+            });
+
+            $('[name=dia_diem]').html(options);
+        })
+        getNguon(function(res) {
+            var options = '<option>-- Chọn nguồn thông tin -- </option>';
+            $(res).each(function(i,el) {
+                options+= '<option value="' + el.nguon_id+'">' + el.ten_nguon + "</option>";
+            });
+
+            $('[name=nguon_thong_tin]').html(options);
+        })
+        getDienGia(function(res) {
+            var options = '<option>-- Chọn diễn giả -- </option>';
+            $(res).each(function(i,el) {
+                options+= '<option value="' + el.dien_gia_id+'">' + el.ten_dien_gia + "</option>";
+            });
+
+            $('[name=dien_gia]').html(options);
+        })
 
         function generateList(res) {
 
@@ -326,6 +361,25 @@
                 }, // Kiểu dữ liệu trả về từ API
                 success: function(data) {
                     callback(data)
+                    hideLoading();
+                },
+                error: function(error) {
+                    console.error('Lỗi khi gửi yêu cầu:', error);
+                }
+            });
+        }
+        function getDiaDiem(callback) {
+            $.ajax({
+                url: '{{ route('v1.api.dia-diem.all') }}', // Thay đổi URL của API của bạn
+                method: 'GET',
+                dataType: 'json',
+                data: {
+                    search: $('#filter [name=search]').val(),
+                    start: start,
+                    length: 10
+                }, // Kiểu dữ liệu trả về từ API
+                success: function(data) {
+                    callback(data)
                 },
                 error: function(error) {
                     console.error('Lỗi khi gửi yêu cầu:', error);
@@ -333,6 +387,61 @@
             });
         }
 
+        function getChuDe(callback) {
+            $.ajax({
+                url: '{{ route('v1.api.chu-de.all') }}', // Thay đổi URL của API của bạn
+                method: 'GET',
+                dataType: 'json',
+                data: {
+                    search: $('#filter [name=search]').val(),
+                    start: start,
+                    length: 10
+                }, // Kiểu dữ liệu trả về từ API
+                success: function(data) {
+                    callback(data)
+                },
+                error: function(error) {
+                    console.error('Lỗi khi gửi yêu cầu:', error);
+                }
+            });
+        }
+
+        function getDienGia(callback) {
+            $.ajax({
+                url: '{{ route('v1.api.dien-gia.all') }}', // Thay đổi URL của API của bạn
+                method: 'GET',
+                dataType: 'json',
+                data: {
+                    search: $('#filter [name=search]').val(),
+                    start: start,
+                    length: 10
+                }, // Kiểu dữ liệu trả về từ API
+                success: function(data) {
+                    callback(data)
+                },
+                error: function(error) {
+                    console.error('Lỗi khi gửi yêu cầu:', error);
+                }
+            });
+        }
+        function getNguon(callback) {
+            $.ajax({
+                url: '{{ route('v1.api.nguon-thong-tin.all') }}', // Thay đổi URL của API của bạn
+                method: 'GET',
+                dataType: 'json',
+                data: {
+                    search: $('#filter [name=search]').val(),
+                    start: start,
+                    length: 10
+                }, // Kiểu dữ liệu trả về từ API
+                success: function(data) {
+                    callback(data)
+                },
+                error: function(error) {
+                    console.error('Lỗi khi gửi yêu cầu:', error);
+                }
+            });
+        }
         //   showLoading();
 
 

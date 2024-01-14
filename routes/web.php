@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\ChuDeController;
 use App\Http\Controllers\DiaDiemController;
+use App\Http\Controllers\DienGiaController;
 use App\Http\Controllers\HoiNghiController;
+use App\Http\Controllers\NguonThongTinController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,9 +42,19 @@ Route::prefix('v1/api/')->group(function () {
             });
         });
 
-        Route::prefix('dia-diem/')->group(function () {
-            Route::name('dia-diem.')->group(function () {
+        Route::prefix('chu-de/')->group(function () {
+            Route::name('chu-de.')->group(function () {
                 Route::get('all', [ChuDeController::class, 'index'])->name('all');
+            });
+        });
+        Route::prefix('dien-gia/')->group(function () {
+            Route::name('dien-gia.')->group(function () {
+                Route::get('all', [DienGiaController::class, 'index'])->name('all');
+            });
+        });
+        Route::prefix('nguon-thong-tin/')->group(function () {
+            Route::name('nguon-thong-tin.')->group(function () {
+                Route::get('all', [NguonThongTinController::class, 'index'])->name('all');
             });
         });
     });
