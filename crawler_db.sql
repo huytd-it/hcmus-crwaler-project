@@ -11,7 +11,7 @@
  Target Server Version : 80031 (8.0.31)
  File Encoding         : 65001
 
- Date: 17/01/2024 21:59:53
+ Date: 19/01/2024 23:40:05
 */
 
 SET NAMES utf8mb4;
@@ -51,7 +51,7 @@ CREATE TABLE `dia_diem`  (
   `create_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `update_by` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`dia_diem_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of dia_diem
@@ -60,6 +60,7 @@ INSERT INTO `dia_diem` VALUES (1, 'Hà Nội', NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `dia_diem` VALUES (2, 'Nhật', NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `dia_diem` VALUES (3, 'Singapore', NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `dia_diem` VALUES (4, 'Đài Loan', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `dia_diem` VALUES (5, 'New York', NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for dien_gia
@@ -75,7 +76,7 @@ CREATE TABLE `dien_gia`  (
   `nguoi_tao` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `nguoi_sua` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`dien_gia_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of dien_gia
@@ -94,7 +95,7 @@ CREATE TABLE `dien_gia_cua_hoi_nghi`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `dien_gia_id`(`dien_gia_id` ASC) USING BTREE,
   INDEX `hoi_nghi_id`(`hoi_nghi_id` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of dien_gia_cua_hoi_nghi
@@ -114,7 +115,7 @@ CREATE TABLE `failed_jobs`  (
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `failed_jobs_uuid_unique`(`uuid` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of failed_jobs
@@ -137,21 +138,29 @@ CREATE TABLE `hoi_nghi`  (
   `nguoi_tao` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `nguoi_sua` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `ngay_xoa` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `nguon_id` int NULL DEFAULT NULL,
+  `chu_de_id` int NULL DEFAULT NULL,
   PRIMARY KEY (`hoi_nghi_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of hoi_nghi
 -- ----------------------------
-INSERT INTO `hoi_nghi` VALUES (1, 'Giải thưởng Sao Khuê 2022', 'Hà Nội', 'http://giaithuongsaokhue.vn/', NULL, '2022-01-10 16:06:33', '2022-04-23 16:06:33', '2024-01-11 15:59:19', '2024-01-11 16:06:33', NULL, NULL, NULL);
-INSERT INTO `hoi_nghi` VALUES (2, 'Các chương trình XTTM tại nước ngoài', 'Nhật, Mỹ, Châu Âu, Singapore, Đài Loan, Malaysia, Hàn Quốc', 'https://vinasa.org.vn/Default.aspx?sname=vinasa&sid=4&pageid=3126&eventtype=12&eventid=1091&evenname=Cac-chuong-trinh-XTTM-tai-nuoc-ngoai', NULL, '2022-02-01 16:06:33', '2022-12-30 16:06:33', '2024-01-11 15:59:19', '2024-01-11 16:06:33', NULL, NULL, NULL);
-INSERT INTO `hoi_nghi` VALUES (3, 'Chuỗi Hội thảo với thị trường Nhật', 'Online', 'https://vinasa.org.vn/Default.aspx?sname=vinasa&sid=4&pageid=3126&eventtype=12&eventid=1088&evenname=Chuoi-Hoi-thao-voi-thi-truong-Nhat', NULL, '2022-02-01 16:06:33', '2022-12-31 16:06:33', '2024-01-11 15:59:19', '2024-01-11 16:06:33', NULL, NULL, NULL);
-INSERT INTO `hoi_nghi` VALUES (4, 'TOP 10 Doanh nghiệp CNTT Việt Nam 2022', 'Hà Nội', 'http://top10ict.com/', NULL, '2022-04-01 16:06:33', '2022-07-01 16:06:33', '2024-01-11 15:59:19', '2024-01-11 16:06:33', NULL, NULL, NULL);
-INSERT INTO `hoi_nghi` VALUES (5, 'Hội thảo Giao thương trực tuyến (VBM)', 'Online', 'https://vinasa.org.vnhttps://vbm.vinasa.org.vn/', NULL, '2022-04-18 16:06:33', '2022-11-25 16:06:33', '2024-01-11 15:59:19', '2024-01-11 16:06:33', NULL, NULL, NULL);
-INSERT INTO `hoi_nghi` VALUES (6, 'Vietnam - ASIA DX SUMMIT 2022', 'Hà Nội', 'https://vinasa.org.vnhttps://dxsummit.vn/', NULL, '2022-05-24 16:06:33', '2022-05-25 16:06:33', '2024-01-11 15:59:19', '2024-01-11 16:06:33', NULL, NULL, NULL);
-INSERT INTO `hoi_nghi` VALUES (7, 'Ngày CNTT Hàn Quốc 2022', 'Hà Nội, HCM, Đà Nẵng + trực tuyến', 'https://vinasa.org.vn/Default.aspx?sname=vinasa&sid=4&pageid=3126&eventtype=12&eventid=1089&evenname=Ngay-CNTT-Han-Quoc-2022', NULL, '2022-08-01 16:06:33', NULL, '2024-01-11 15:59:19', '2024-01-11 16:06:33', NULL, NULL, NULL);
-INSERT INTO `hoi_nghi` VALUES (8, 'Smart City Summit 2022 và ASIA Smart City Summit 2022', 'Bình Dương / Đà Nẵng', 'https://vinasa.org.vnhttps://smartcity.vinasa.org.vn/', NULL, '2022-10-18 16:06:33', '2022-10-19 16:06:33', '2024-01-11 15:59:19', '2024-01-11 16:06:33', NULL, NULL, NULL);
-INSERT INTO `hoi_nghi` VALUES (9, 'Vietnam Blockchain Summit 2022', 'Hà Nội', 'https://vinasa.org.vnhttps://vietnamblockchainsummit.com/', NULL, '2022-10-19 16:06:33', '2022-10-20 16:06:33', '2024-01-11 15:59:19', '2024-01-11 16:06:33', NULL, NULL, NULL);
+INSERT INTO `hoi_nghi` VALUES (1, 'The 2024 Digiday Publishing Summit Preview', 'New York, NY', 'https://digiday.com/events/the-2024-digiday-publishing-summit-preview/', NULL, '2024-02-28 00:00:00', '2024-02-28 00:00:00', '2024-01-17 16:29:02', '2024-01-19 14:57:28', NULL, NULL, NULL, 2, 1);
+INSERT INTO `hoi_nghi` VALUES (2, 'Digiday Media Buying Summit', 'Nashville, TN', 'https://digiday.com/events/digiday-media-buying-summit-march-24/', NULL, '2024-03-04 00:00:00', '2024-03-06 00:00:00', '2024-01-17 16:29:02', '2024-01-19 14:57:28', NULL, NULL, NULL, 2, 1);
+INSERT INTO `hoi_nghi` VALUES (3, 'Glossy Beauty Pop', 'Los Angeles, CA', 'https://digiday.com/events/glossy-beauty-pop/', NULL, '2024-03-13 00:00:00', '2024-03-13 00:00:00', '2024-01-17 16:29:02', '2024-01-19 14:57:28', NULL, NULL, NULL, 2, 1);
+INSERT INTO `hoi_nghi` VALUES (4, 'Digiday Publishing Summit', 'Vail, CO', 'https://digiday.com/events/digiday-publishing-summit-march-2024/', NULL, '2024-03-25 00:00:00', '2024-03-27 00:00:00', '2024-01-17 16:29:02', '2024-01-19 14:57:28', NULL, NULL, NULL, 2, 1);
+INSERT INTO `hoi_nghi` VALUES (5, 'Modern Retail Commerce Summit', 'New Orleans, LA', 'https://digiday.com/events/modern-retail-commerce-summit-april-2024/', NULL, '2024-04-15 00:00:00', '2024-04-17 00:00:00', '2024-01-17 16:29:02', '2024-01-19 14:57:28', NULL, NULL, NULL, 2, 1);
+INSERT INTO `hoi_nghi` VALUES (6, 'Digiday Programmatic Marketing Summit', 'Palm Springs, CA', 'https://digiday.com/events/digiday-programmatic-marketing-summit-may-24/', NULL, '2024-05-15 00:00:00', '2024-05-17 00:00:00', '2024-01-17 16:29:02', '2024-01-19 14:57:28', NULL, NULL, NULL, 2, 1);
+INSERT INTO `hoi_nghi` VALUES (7, 'Glossy E-Commerce Summit', 'Miami, FL', 'https://digiday.com/events/glossy-ecommerce-summit-june-2024/', NULL, '2024-06-10 00:00:00', '2024-06-12 00:00:00', '2024-01-17 16:29:02', '2024-01-19 14:57:28', NULL, NULL, NULL, 2, 1);
+INSERT INTO `hoi_nghi` VALUES (8, 'Glossy Beauty Pop', 'Los Angeles, CA', 'https://digiday.com/events/glossy-beauty-pop-july-2024/', NULL, '2024-07-19 00:00:00', '2024-07-19 00:00:00', '2024-01-17 16:29:02', '2024-01-19 14:57:28', NULL, NULL, NULL, 2, 1);
+INSERT INTO `hoi_nghi` VALUES (9, 'Digiday Publisher Golf Outing', 'Kenilworth, NJ', 'https://digiday.com/events/digiday-publisher-golf-outing-july-2024/', NULL, '2024-07-11 00:00:00', '2024-07-11 00:00:00', '2024-01-17 16:29:02', '2024-01-19 14:57:28', NULL, NULL, NULL, 2, 1);
+INSERT INTO `hoi_nghi` VALUES (10, 'Modern Retail Summit', '', 'https://digiday.com/events/modern-retail-summit-aug-2024/', NULL, '2024-08-19 00:00:00', '2024-08-19 00:00:00', '2024-01-17 16:29:02', '2024-01-19 14:57:28', NULL, NULL, NULL, 2, 1);
+INSERT INTO `hoi_nghi` VALUES (11, 'Digiday Publishing Summit', 'Miami, FL', 'https://digiday.com/events/digiday-publishing-summit-sep-24/', NULL, '2024-09-23 00:00:00', '2024-09-25 00:00:00', '2024-01-17 16:29:02', '2024-01-19 14:57:28', NULL, NULL, NULL, 2, 1);
+INSERT INTO `hoi_nghi` VALUES (12, 'Digiday Media Buying Summit', '', 'https://digiday.com/events/digiday-media-buying-summit-oct-24/', NULL, '2024-10-19 00:00:00', '2024-10-19 00:00:00', '2024-01-17 16:29:02', '2024-01-19 14:57:28', NULL, NULL, NULL, 2, 1);
+INSERT INTO `hoi_nghi` VALUES (13, 'Digiday Publishing Summit Europe', 'Barcelona, Spain', 'https://digiday.com/events/digiday-publishing-summit-europe-nov-2024/', NULL, '2024-11-19 00:00:00', '2024-11-19 00:00:00', '2024-01-17 16:29:02', '2024-01-19 14:57:28', NULL, NULL, NULL, 2, 1);
+INSERT INTO `hoi_nghi` VALUES (14, 'Glossy Beauty x Wellness Summit', '', 'https://digiday.com/events/glossy-beauty-summit-nov-2024/', NULL, '2024-11-19 00:00:00', '2024-11-19 00:00:00', '2024-01-17 16:29:02', '2024-01-19 14:57:28', NULL, NULL, NULL, 2, 1);
+INSERT INTO `hoi_nghi` VALUES (15, 'Digiday Programmatic Marketing Summit', '', 'https://digiday.com/events/digiday-programmatic-marketing-summit-dec-2024/', NULL, '2024-12-19 00:00:00', '2024-12-19 00:00:00', '2024-01-17 16:29:02', '2024-01-19 14:57:28', NULL, NULL, NULL, 2, 1);
 
 -- ----------------------------
 -- Table structure for migrations
@@ -189,7 +198,7 @@ CREATE TABLE `moc_thoi_gian`  (
   `nguoi_sua` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`moc_thoi_gian_id`) USING BTREE,
   INDEX `hoi_nghi_id`(`hoi_nghi_id` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of moc_thoi_gian
@@ -209,11 +218,13 @@ CREATE TABLE `nguon_thong_tin`  (
   `nguoi_tao` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `nguoi_sua` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`nguon_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of nguon_thong_tin
 -- ----------------------------
+INSERT INTO `nguon_thong_tin` VALUES (1, 'https://vinasa.org.vn/vinasa/4/3074/4205/lich-su-kien/', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `nguon_thong_tin` VALUES (2, 'https://digiday.com/events/', NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for password_reset_tokens
@@ -248,7 +259,7 @@ CREATE TABLE `personal_access_tokens`  (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `personal_access_tokens_token_unique`(`token` ASC) USING BTREE,
   INDEX `personal_access_tokens_tokenable_type_tokenable_id_index`(`tokenable_type` ASC, `tokenable_id` ASC) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of personal_access_tokens
