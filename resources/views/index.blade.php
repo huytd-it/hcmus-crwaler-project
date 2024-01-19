@@ -180,7 +180,7 @@
                     <div class="col-xl-3">
                         <div class="form-group">
 
-                            <select name="nguon_thong_tin" id="" class="form-control">
+                            <select name="nguon_id" id="" class="form-control">
                                 <option value=""> -- Nguồn thông tin --</option>
                             </select>
                         </div>
@@ -188,7 +188,7 @@
                     <div class="col-xl-3">
                         <div class="form-group">
 
-                            <select name="dia_diem" id="" class="form-control">
+                            <select name="dia_diem_id" id="" class="form-control">
                                 <option value=""> -- Địa điểm --</option>
 
                             </select>
@@ -197,7 +197,7 @@
                     <div class="col-xl-3">
                         <div class="form-group">
 
-                            <select name="dien_gia" id="" class="form-control">
+                            <select name="dien_gia_id" id="" class="form-control">
                                 <option value=""> -- Diễn giả --</option>
 
                             </select>
@@ -206,13 +206,13 @@
                     <div class="col-xl-3">
                         <div class="form-group">
 
-                            <select name="linh_vuc" id="" class="form-control">
+                            <select name="chu_de_id" id="" class="form-control">
                                 <option value=""> -- Lĩnh vực quan tâm --</option>
 
                             </select>
                         </div>
                     </div>
-                    <div class="col-xl-3">
+                    {{-- <div class="col-xl-3">
                         <div class="form-group">
 
                             <select name="" id="" class="form-control">
@@ -220,7 +220,7 @@
 
                             </select>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="col-xl-9">
                         <div class="form-group">
 
@@ -259,6 +259,7 @@
         $('select').select2({
             theme: 'bootstrap-5'
         });
+        var intervalIds = [];
 
         function showLoading() {
             $('body').addClass('loading');
@@ -273,45 +274,55 @@
             getHoiNghi(generateList);
         });
 
+        $('#filter select[name]').on('change', function() {
+            showLoading();
+            getHoiNghi(generateList);
+        });
+
         var start = 0;
 
         getHoiNghi(generateList);
 
         getChuDe(function(res) {
-            var options = '<option>-- Chọn lĩnh vực -- </option>';
-            $(res).each(function(i,el) {
-                options+= '<option value="' + el.chu_de_id+'">' + el.ten_chu_de + "</option>";
+            var options = '<option value="">-- Chọn lĩnh vực -- </option>';
+            $(res).each(function(i, el) {
+                options += '<option value="' + el.chu_de_id + '">' + el.ten_chu_de + "</option>";
             });
 
-            $('[name=linh_vuc]').html(options);
+            $('[name=chu_de_id]').html(options);
         });
 
         getDiaDiem(function(res) {
-            var options = '<option>-- Chọn địa điểm -- </option>';
-            $(res).each(function(i,el) {
-                options+= '<option value="' + el.dia_diem_id+'">' + el.ten_dia_diem + "</option>";
+            var options = '<option value="">-- Chọn địa điểm -- </option>';
+            $(res).each(function(i, el) {
+                options += '<option value="' + el.ten_dia_diem + '">' + el.ten_dia_diem + "</option>";
             });
 
-            $('[name=dia_diem]').html(options);
+            $('[name=dia_diem_id]').html(options);
         })
         getNguon(function(res) {
-            var options = '<option>-- Chọn nguồn thông tin -- </option>';
-            $(res).each(function(i,el) {
-                options+= '<option value="' + el.nguon_id+'">' + el.ten_nguon + "</option>";
+            var options = '<option value="">-- Chọn nguồn thông tin -- </option>';
+            $(res).each(function(i, el) {
+                options += '<option value="' + el.nguon_id + '">' + el.ten_nguon + "</option>";
             });
 
-            $('[name=nguon_thong_tin]').html(options);
+            $('[name=nguon_id]').html(options);
         })
         getDienGia(function(res) {
-            var options = '<option>-- Chọn diễn giả -- </option>';
-            $(res).each(function(i,el) {
-                options+= '<option value="' + el.dien_gia_id+'">' + el.ten_dien_gia + "</option>";
+            var options = '<option value="">-- Chọn diễn giả -- </option>';
+            $(res).each(function(i, el) {
+                options += '<option value="' + el.dien_gia_id + '">' + el.ten_dien_gia + "</option>";
             });
 
-            $('[name=dien_gia]').html(options);
+            $('[name=dien_gia_id]').html(options);
         })
 
         function generateList(res) {
+
+            for (var i = 0; i < intervalIds.length; i++) {
+                clearInterval(intervalIds[i]);
+            }
+            intervalIds = [];
 
             $('#pagination-container').pagination({
                 dataSource: res.data,
@@ -322,7 +333,7 @@
                     var html = '';
                     $(data).each(function(i, el) {
 
-                        html += template(el);
+                        html += template(el, i);
                     })
 
                     $('#data-container').html(html);
@@ -356,8 +367,13 @@
                 dataType: 'json',
                 data: {
                     search: $('#filter [name=search]').val(),
+                    nguon_id: $('#filter [name=nguon_id]').val(),
+                    chu_de_id: $('#filter [name=chu_de_id]').val(),
+                    dien_gia_id: $('#filter [name=dien_gia_id]').val(),
+                    dia_diem_id: $('#filter [name=dia_diem_id]').val(),
+
                     start: start,
-                    length: 10
+                    length: 100
                 }, // Kiểu dữ liệu trả về từ API
                 success: function(data) {
                     callback(data)
@@ -368,6 +384,7 @@
                 }
             });
         }
+
         function getDiaDiem(callback) {
             $.ajax({
                 url: '{{ route('v1.api.dia-diem.all') }}', // Thay đổi URL của API của bạn
@@ -424,6 +441,7 @@
                 }
             });
         }
+
         function getNguon(callback) {
             $.ajax({
                 url: '{{ route('v1.api.nguon-thong-tin.all') }}', // Thay đổi URL của API của bạn
@@ -444,25 +462,51 @@
         }
         //   showLoading();
 
+        function updateCountdown(selector, data) {
+            var currentTime = moment();
 
-        function template(data) {
+            var duration = moment.duration(moment(data.thoi_gian_ket_thuc).diff(currentTime));
+
+            var days = duration.days();
+            var hours = duration.hours();
+            var minutes = duration.minutes();
+            var seconds = duration.seconds();
+
+            document.getElementById(selector).innerHTML = days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's';
+        }
+
+
+
+        function template(data, i) {
             var startDate = moment(data.thoi_gian_bat_dau).format('MMMM Do YYYY');
-            return `<div class="card mt-2 bg-info-subtle">
+            var endDate = '';
+            var now = moment();
+            if (data.thoi_gian_ket_thuc) {
+                endDate = moment(data.thoi_gian_ket_thuc);
+
+            }
+            const countdownId = "countdown_" + i + "_" + (new Date()).getTime();
+
+            intervalIds.push(setInterval(function() {
+                updateCountdown(countdownId, data);
+            }, 1000));
+
+
+            return `<div class="card mt-2 bg-info-subtle ">
                     <div class="card-body">
                         <div class="row">
                             <div class="col-xl-6">
                                 <p class="title h4 mb-4 text-uppercase">${data.ten_hoi_nghi}</p>
                                 <p class="address mb-0">Địa điểm: ${data.dia_diem}</p>
                                 <p class="date mb-0">Ngày diễn ra: ${startDate}</p>
-                                <p class="subject mb-0">Chủ đề: Asia Conference on Computer and Communications Security
+                                <p class="subject mb-0">Chủ đề:${data.ten_chu_de}
                                 </p>
                             </div>
                             <div class="col-xl-6">
-                                <p class="time h4 mb-4">12 days 05 h 49 m 19 s</p>
-                                <p class="deadline mb-0">Deadline: Fri Dec 1st 2023 18:59:59 +07 (2023-11-30 23:59:59
-                                    UTC-12)
+                                <p class="time countdown h4 mb-4" style="width:200px" id="${countdownId}"></p>
+                                <p class="deadline mb-0">Deadline: ${endDate.format('MMMM Do YYYY')}
                                 </p>
-                                <p class="origin-website">Website: https://www.petsymposium.org/cfp24.php</p>
+                                <a class="origin-website" href="${data.lien_ket}">Website: ${data.lien_ket}</a>
                                 <div class="horizontal-timeline example">
                                     <div class="events-content">
                                         <ol>
@@ -487,7 +531,7 @@
         }
         var container = $('#pagination-container');
         container.addHook('beforePageOnClick', function() {
-           console.log(this);
+            console.log(this);
         });
     </script>
 </body>

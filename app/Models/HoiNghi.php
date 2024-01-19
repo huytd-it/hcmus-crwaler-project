@@ -30,6 +30,7 @@ class HoiNghi extends Model
         'nguoi_tao',
         'nguoi_sua',
         'ngay_xoa',
+        'nguon_id'
 
     ];
 
